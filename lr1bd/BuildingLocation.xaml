@@ -1,0 +1,26 @@
+﻿<Window x:Class="lr1bd.BuildingLocation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lr1bd"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="BuildingLocation" Height="465" Width="320">
+    <Grid>
+        <Button Name="NewLocation" Content="Добавить" HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Top" Height="25" Width="232" Click="NewLocation_Click"/>
+        <TextBlock x:Name="CityDistrict" HorizontalAlignment="Left" Margin="32,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="23" Width="181"><Run Language="ru-ru" Text="Район города"/></TextBlock>
+        <TextBox Name="TB1" HorizontalAlignment="Left" Margin="32,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="16"/>
+        <TextBox Name="TB2" HorizontalAlignment="Left" Margin="32,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBlock x:Name="Street" HorizontalAlignment="Left" Margin="32,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="19" Width="181"><Run Language="ru-ru" Text="Улица"/></TextBlock>
+        <TextBox Name="TB3" HorizontalAlignment="Left" Margin="32,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="TB3_KeyDown"/>
+        <TextBlock x:Name="House" HorizontalAlignment="Left" Margin="32,142,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="181"><Run Language="ru-ru" Text="Дом"/></TextBlock>
+        <TextBox Name="TB4" HorizontalAlignment="Left" Margin="32,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="18" TextChanged="TB4_TextChanged"/>
+        <TextBlock x:Name="CityCenterDistance" HorizontalAlignment="Left" Margin="32,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="17" Width="181"><Run Language="ru-ru" Text="Дистанция до центра города"/></TextBlock>
+        <Button Content="Отмена" HorizontalAlignment="Center" Margin="0,354,0,0" VerticalAlignment="Top" Width="232" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="32,245,0,0" TextWrapping="Wrap" Text="Порядковый номер в документах" VerticalAlignment="Top" Height="39" Width="181"/>
+        <TextBox Name="TB5" HorizontalAlignment="Left" Margin="32,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181" Height="17" TextChanged="TextBox_TextChanged"/>
+        <Button Content="Обновить строку" HorizontalAlignment="Center" Margin="0,391,0,0" VerticalAlignment="Top" Height="25" Width="232" Click="Button_Click_1"/>
+
+    </Grid>
+</Window>
