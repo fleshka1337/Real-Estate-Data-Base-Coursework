@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Projects\vs\3\lr1bd_corsework\lr1bd\App.xaml
-81762283593
+14-152325362
 
-13-10271746
-14-1972824879
-Building.xaml;BuildingLocation.xaml;Building_Material.xaml;Flat.xaml;Flat_Space.xaml;LoginWindow.xaml;MainWindow.xaml;Room.xaml;
+19232145177
+48225896607
+Building.xaml;BuildingDeveloper.xaml;BuildingLocation.xaml;Building_Material.xaml;CreateApartment_FromDeveloper.xaml;CreateBuilding_FromDeveloper.xaml;CreateRoom_FromDeveloper.xaml;Flat.xaml;Flat_Space.xaml;LoginWindow.xaml;MainWindow.xaml;Realtor.xaml;RegWindow.xaml;Room.xaml;
 
 True
 

@@ -15,6 +15,15 @@ using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Windows.Data;
 using MySqlX.XDevAPI.Relational;
+using System.Data.SqlClient;
+
+using CrystalDecisions.CrystalReports.Engine;
+
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Collections;
+using System.Web.UI.WebControls;
 
 namespace lr1bd
 {
@@ -25,6 +34,8 @@ namespace lr1bd
     public partial class MainWindow : Window
     {
         private readonly string dataConnect = "server=localhost; user=root; database=mydb;port=3306;password=root";
+
+        public string nameOfTable = "";
 
         int MyRowCount;
         DataTable HelpTable;
@@ -61,7 +72,7 @@ namespace lr1bd
 
         private void WhatsRB_Checked(object sender, RoutedEventArgs e)
         {
-            if (sender is RadioButton item)
+            if (sender is System.Windows.Controls.RadioButton item)
             {
                 Transfer.ValueString = item.Name;
             }
@@ -250,6 +261,8 @@ namespace lr1bd
                 MakeColumnNameList(ds.Tables[0]);
                 HelpTable = ds.Tables[0];
                 columnNumber = 1;
+
+                nameOfTable = "building_location";
             }
             catch (MySqlException ex) 
             {
@@ -277,6 +290,8 @@ namespace lr1bd
                 HelpTable = ds.Tables[0];
 
                 columnNumber = 2;
+
+                nameOfTable = "building";
             }
             catch (MySqlException ex)
             {
@@ -304,6 +319,8 @@ namespace lr1bd
                 HelpTable = ds.Tables[0];
 
                 columnNumber = 3;
+
+                nameOfTable = "Building_material";
             }
             catch (MySqlException ex)
             {
@@ -331,6 +348,8 @@ namespace lr1bd
                 HelpTable = ds.Tables[0];
 
                 columnNumber = 4;
+
+                nameOfTable = "Flat";
             }
             catch (MySqlException ex)
             {
@@ -358,6 +377,8 @@ namespace lr1bd
                 HelpTable = ds.Tables[0];
 
                 columnNumber = 5;
+
+                nameOfTable = "Flat_spcae";
             }
             catch (MySqlException ex)
             {
@@ -386,6 +407,8 @@ namespace lr1bd
                 HelpTable = ds.Tables[0];
 
                 columnNumber = 6;
+
+                nameOfTable = "Room";
             }
             catch (MySqlException ex)
             {
@@ -1304,6 +1327,160 @@ namespace lr1bd
             {
                 MessageBox.Show("Не выделена строка!");
             }
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Вы успешно закончили сеанс под аккаунтом администратора\nВы будете перенаправлены в меню авторизации");
+            this.Hide();
+            // Создание экземпляра класса LoginWindow 
+            LoginWindow loginWindow = new LoginWindow();
+            // Отображение созданного окна
+            loginWindow.ShowDialog();
+            this.Close();
+
+
+        }
+
+        private void Button_Click_12(object sender, RoutedEventArgs e)
+        {
+            if (nameOfTable.Length != 0)
+            {
+                // Создаем подключение к базе данных
+                string connectionString = "server=localhost; user=root; database=mydb;port=3306;password=root";
+                MySqlConnection connection = new MySqlConnection(connectionString);
+
+                // Создаем команду для выборки данных из таблицы
+                string query = "SELECT * FROM " + nameOfTable;
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                // Создаем адаптер для заполнения таблицы в памяти
+                MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                DataTable table = new DataTable();
+
+                // Заполняем таблицу данными из базы данных
+                adapter.Fill(table);
+
+                // Создаем документ в формате pdf
+                Document document = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
+                PdfWriter writer = PdfWriter.GetInstance(document, new FileStream("Report.pdf", FileMode.Create));
+
+                // Открываем документ для записи
+                document.Open();
+
+                // Создаем шрифт для текста
+                //BaseFont baseFont = BaseFont.CreateFont("arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                BaseFont baseFont = BaseFont.CreateFont("C:\\Windows\\Fonts\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                Font font = new Font(baseFont, 12f, Font.NORMAL);
+
+                // Создаем заголовок документа
+                iTextSharp.text.Paragraph title = new iTextSharp.text.Paragraph("Отчет по таблице " + nameOfTable, font);
+                title.Alignment = Element.ALIGN_CENTER;
+                document.Add(title);
+
+                // Создаем пустую строку для отступа
+                document.Add(new iTextSharp.text.Paragraph(" "));
+
+                // Создаем таблицу в документе с количеством столбцов равным количеству столбцов в таблице из базы данных
+                PdfPTable pdfTable = new PdfPTable(table.Columns.Count);
+
+                // Добавляем заголовки столбцов в таблицу в документе
+                foreach (DataColumn column in table.Columns)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(column.ColumnName, font));
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                    pdfTable.AddCell(cell);
+                }
+
+                // Добавляем данные из таблицы в памяти в таблицу в документе построчно
+                foreach (DataRow row in table.Rows)
+                {
+                    foreach (object item in row.ItemArray)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(item.ToString(), font));
+                        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                        cell.VerticalAlignment = Element.ALIGN_MIDDLE;
+                        pdfTable.AddCell(cell);
+                    }
+                }
+
+                // Добавляем таблицу в документ
+                document.Add(pdfTable);
+
+                // Закрываем документ
+                document.Close();
+            } 
+            else
+            {
+                MessageBox.Show("Откройте таблицу, чтобы продолжить");
+            }
+        }
+
+        private void Button_Click_13(object sender, RoutedEventArgs e)
+        {
+            // Создаем документ pdf
+            Document document = new Document(PageSize.A4, 50, 50, 25, 25);
+            // Создаем поток для записи в файл
+            FileStream stream = new FileStream("Selected_Report.pdf", FileMode.Create);
+            // Создаем писатель pdf
+            PdfWriter writer = PdfWriter.GetInstance(document, stream);
+            // Открываем документ
+            document.Open();
+
+            // Создаем шрифт для текста
+            BaseFont baseFont = BaseFont.CreateFont("C:\\Windows\\Fonts\\arial.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            Font font = new Font(baseFont, 12, Font.NORMAL);
+
+            // Создаем заголовок документа
+            iTextSharp.text.Paragraph title = new iTextSharp.text.Paragraph("Отчет по выбранным строчкам в таблице " + nameOfTable, font);
+            title.Alignment = Element.ALIGN_CENTER;
+            document.Add(title);
+
+            // Создаем пустую строку для отступа
+            document.Add(new iTextSharp.text.Paragraph(" "));
+
+            // Создаем таблицу pdf с количеством столбцов равным количеству столбцов в DataGrid
+            PdfPTable table = new PdfPTable(DG1.Columns.Count);
+
+            // Добавляем заголовки столбцов в таблицу pdf
+            foreach (System.Windows.Controls.DataGridColumn column in DG1.Columns)
+            {
+                PdfPCell cell = new PdfPCell(new Phrase(column.Header.ToString(), font));
+                cell.BackgroundColor = new BaseColor(240, 240, 240);
+                table.AddCell(cell);
+            }
+
+            // Добавляем данные из выделенных строк DataGrid в таблицу pdf
+            foreach (DataRowView row in DG1.SelectedItems)
+            {
+                foreach (System.Windows.Controls.DataGridColumn column in DG1.Columns)
+                {
+                    
+                    // Получаем значение ячейки по индексу строки и столбца
+                    //string value = ((TextBlock)column.GetCellContent(row)).Text;
+
+                    // Получаем значение ячейки по индексу строки и столбца
+                    var cellContent = column.GetCellContent(row);
+                    string value = cellContent == null ? "" : ((TextBlock)cellContent).Text;
+
+                    // Создаем ячейку pdf с этим значением
+                    PdfPCell cell = new PdfPCell(new Phrase(value, font));
+                    // Добавляем ячейку в таблицу pdf
+                    table.AddCell(cell);
+                }
+            }
+
+            // Добавляем таблицу pdf в документ
+            document.Add(table);
+
+            // Закрываем документ
+            document.Close();
+        }
+
+        private void Button_Click_14(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

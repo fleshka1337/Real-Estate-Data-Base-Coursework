@@ -5,10 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lr1bd"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="375" Width="375"
+        Title="LoginWindow" Height="400" Width="375"
         WindowStartupLocation="CenterScreen"
         >
+    <Window.Foreground>
+        <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}"/>
+    </Window.Foreground>
+    <Window.Background>
+        <ImageBrush ImageSource="/Img/db3.jpg" Stretch="UniformToFill" Opacity="0.28"/>
+    </Window.Background>
+
     <Grid>
+
+        <Button x:Name="AuthButton" Content="Авторизация" HorizontalAlignment="Left" Margin="55,196,0,0" VerticalAlignment="Top" Width="268" Height="28" FontFamily="Segoe UI Semibold" Click="AuthButton_Click"/>
+        <Button x:Name="RegButton" Content="Регистрация" HorizontalAlignment="Left" Margin="55,296,0,0" VerticalAlignment="Top" Width="270" Height="28" Click="RegButton_Click" FontFamily="Segoe UI Semibold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="54,35,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" Height="73" FontSize="14" FontFamily="Segoe UI Variable Small" FontWeight="Bold"><Run Text="Добро пожаловать "/><LineBreak/><Run Text="в приложение для работы с базой данных учета жилых помещений БТИ"/></TextBlock>
+        <TextBox Name="TB1" HorizontalAlignment="Left" Margin="101,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" TextChanged="TextBox_TextChanged"/>
+        <TextBox Name="TB2" HorizontalAlignment="Left" Margin="101,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177"/>
+        <TextBlock HorizontalAlignment="Left" Margin="54,137,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"><Run Language="ru-ru" Text="Логин"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="54,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="54,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" FontStyle="Italic"><Run Text="Нет аккаунта?"/><LineBreak/><Run Language="ru-ru" Text="Создайте его, нажав на кнопку ниже"/></TextBlock>
 
     </Grid>
 </Window>
