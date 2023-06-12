@@ -9,12 +9,9 @@
         Title="Realtor" Height="800" Width="1020" Foreground="#FF151313" Background="#FF99B4D1">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="837,691,0,0" TextWrapping="Wrap" Text="Аккаунт риелтора" VerticalAlignment="Top" Width="158" FontStyle="Italic"/>
-        <Button x:Name="BtnLogout" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="837,712,0,0" VerticalAlignment="Top" Height="28" Width="158" Background="#FFFF7878" Click="BtnLogout_Click"/>
         <DataGrid Name="DG1" ItemsSource="{Binding}" Margin="10,38,10,0" Height="210" Width="NaN" VerticalAlignment="Top" SelectionChanged="BuildingDataGrid_SelectionChanged"/>
         <DataGrid Name="DG2" ItemsSource="{Binding}" Margin="14,276,0,0" Height="130" Width="478" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="FlatDataGrid_SelectionChanged"/>
         <DataGrid Name="DG3" ItemsSource="{Binding}" Margin="14,438,0,0" Height="129" Width="478" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="RoomDataGrid_SelectionChanged"/>
-        <Button Name="BTN1" Content="Сохранить отчет в Excel" HorizontalAlignment="Left" Margin="14,584,0,0" VerticalAlignment="Top" Height="47" Width="189" Click="BTN1_Click"/>
         <TextBox x:Name="SearchCondition" Margin="837,261,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="153"/>
         <ListBox x:Name="TableList" Margin="840,359,0,0" Width="150" Height="195" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button x:Name="SearchInDB" Content="Найти" HorizontalAlignment="Left" Margin="840,559,0,0" VerticalAlignment="Top" Width="150" Click="Search_Click"/>
@@ -28,7 +25,6 @@
             <RadioButton Name="rbLess" Content="Меньше" Height="20" Checked="WhatsRB_Checked"/>
             <RadioButton Name="rbLessEqual" Content="Меньше равно" Height="20" Checked="WhatsRB_Checked"/>
         </StackPanel>
-        <Button Name="BTN2" Content="Сохранить отчет в Word&#xD;&#xA;(В виде строчек)" HorizontalAlignment="Left" Margin="14,640,0,0" VerticalAlignment="Top" Height="46" Width="189" Click="Button_Click"/>
         <ComboBox Name="Table_BTN" SelectionChanged="Table_ComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="837,293,0,0" VerticalAlignment="Top" Width="153" Height="50">
             <ComboBoxItem>
                 <StackPanel>
@@ -52,13 +48,50 @@
         <TextBlock Margin="14,9,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF1F2B24" FontSize="16" HorizontalAlignment="Left" Width="802"><Run Text="Таблица со "/><Run Language="ru-ru" Text="зданиями ("/><Run Text="Building"/><Run Language="ru-ru" Text=")"/></TextBlock>
         <TextBlock Margin="20,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Foreground="#FF1F2B24" FontSize="16" HorizontalAlignment="Left" Width="796"><Run Text="Таблица "/><Run Language="ru-ru" Text="с квартирами в"/><Run Text=" "/><Run Text="зданиями (Flat)"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="14,412,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="981" Foreground="#FF1F2B24" FontSize="16"><Run Text="Таблица "/><Run Language="ru-ru" Text="с комнатами в квартире"/><Run Text=" (Room)"/></TextBlock>
-        <Button Content="Сохранить отчет в Word&#xD;&#xA;(В виде таблиц)" HorizontalAlignment="Left" Margin="14,692,0,0" VerticalAlignment="Top" Height="48" Width="189" Click="Button_Click_1" IsEnabled="False"/>
-        <Button Name="buttonPrint" Content="Print&#xD;&#xA;" HorizontalAlignment="Left" Margin="224,640,0,0" VerticalAlignment="Top" Height="46" Width="162" Click="buttonPrint_Click"/>
-        <Button Content="Report" HorizontalAlignment="Left" Margin="224,586,0,0" VerticalAlignment="Top" Height="43" Width="162" Click="Button_Click_2"/>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="auto" Height="NaN" Margin="510,438,204,62" Width="NaN">
             <TextBlock Name="TB_Report" TextWrapping="Wrap" Text="TextBlock" Background="#FFF1EFEF"/>
         </ScrollViewer>
+
+        <ComboBox Name="ReportSelection_ComboBox" SelectionChanged="ReportSelection_ComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="30,602,0,0" VerticalAlignment="Top" Width="208" Height="50">
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Выберите</TextBlock>
+                    <TextBlock>Работа с отчетами</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Создать</TextBlock>
+                    <TextBlock>Отчет по зданию</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Печать</TextBlock>
+                    <TextBlock>Полученного отчета</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Excel</TextBlock>
+                    <TextBlock>Сохранить отчет</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Word</TextBlock>
+                    <TextBlock>Сохранить отчет</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem Background="#FFFF7878">
+                <StackPanel>
+                    <TextBlock FontSize="16">Выйти из аккаунта</TextBlock>
+                    <TextBlock>Аккаунт риелтора</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+        <Button Name="CreateReport_BTN" Content="Выполнить" HorizontalAlignment="Left" Margin="257,602,0,0" VerticalAlignment="Top" Height="49" Width="158" Click="CreateReport_BTN_Click"/>
 
 
     </Grid>

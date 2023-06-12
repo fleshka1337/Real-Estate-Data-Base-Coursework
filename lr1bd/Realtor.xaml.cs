@@ -75,6 +75,7 @@ namespace lr1bd
             LoadBuildings();
 
             Table_BTN.SelectedIndex = 0;
+            ReportSelection_ComboBox.SelectedIndex = 0;
 
             TB_Report.Text = "";
         }
@@ -413,6 +414,13 @@ namespace lr1bd
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            saveToWord();
+        }
+
+        private void saveToWord()
+        {
+            //ClearDataGrid1AndKeepSelectedRow(DG1);
+
             Word.Application wordApp = new Word.Application();
             Word.Document doc = wordApp.Documents.Add();
 
@@ -430,7 +438,9 @@ namespace lr1bd
             doc.Close();
             wordApp.Quit();
 
-            MessageBox.Show("Отчет сохранен в файл.");
+            MessageBox.Show("Отчет сохранен в файл." + "Риелтор_Word_Отчет_СТРОКИ.docx");
+
+            System.Diagnostics.Process.Start(filePath);
         }
 
         private void BuildingDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -723,9 +733,9 @@ namespace lr1bd
             ExcelPackage excelPackage = new ExcelPackage();
 
             // Создаем листы в Excel-файле
-            ExcelWorksheet worksheet1 = excelPackage.Workbook.Worksheets.Add("DG1");
-            ExcelWorksheet worksheet2 = excelPackage.Workbook.Worksheets.Add("DG2");
-            ExcelWorksheet worksheet3 = excelPackage.Workbook.Worksheets.Add("DG3");
+            ExcelWorksheet worksheet1 = excelPackage.Workbook.Worksheets.Add("Дом");
+            ExcelWorksheet worksheet2 = excelPackage.Workbook.Worksheets.Add("Квартиры");
+            ExcelWorksheet worksheet3 = excelPackage.Workbook.Worksheets.Add("Комнаты");
 
             // Заполняем данные для первой таблицы (DG1)
             FillWorksheetFromDataGrid(DG1, worksheet1);
@@ -742,6 +752,8 @@ namespace lr1bd
             excelPackage.SaveAs(excelFile);
 
             MessageBox.Show("Отчет сохранен в файле: " + fileName);
+
+            System.Diagnostics.Process.Start(fileName);
         }
 
         private void FillWorksheetFromDataGrid(DataGrid dataGrid, ExcelWorksheet worksheet)
@@ -964,6 +976,239 @@ namespace lr1bd
             return text;
         }
 
+        private void CreateReport_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            // Получаем выбранный элемент ComboBox
+            ComboBoxItem selectedComboBoxItem = ReportSelection_ComboBox.SelectedItem as ComboBoxItem;
+
+            if (selectedComboBoxItem != null)
+            {
+                // Получаем текст выбранного элемента ComboBox
+                string selectedText = (selectedComboBoxItem.Content as StackPanel).Children.OfType<TextBlock>().FirstOrDefault()?.Text;
+
+                // Выводим MessageBox с текстом в зависимости от выбранного элемента ComboBox
+                switch (selectedText)
+                {
+                    case "Создать":
+                        createReportTB();
+
+                        MessageBox.Show("Отчет успешно создан!");
+
+                        // Создаем MessageBox с вопросом
+                        MessageBoxResult result = MessageBox.Show("Напечатать полученный отчет?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                        // Обрабатываем результат
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                // Действия при нажатии на "Да"
+                                printCreatedReportFromTB();
+                                //MessageBox.Show("Вы выбрали Да.");
+                                break;
+
+                            case MessageBoxResult.No:
+                                // Действия при нажатии на "Нет"
+                                //MessageBox.Show("Вы выбрали Нет.");
+                                break;
+                        }
+                        break;
+                    case "Печать":
+                        //MessageBox.Show("Выбрана таблица Flat");
+                        if (string.IsNullOrEmpty(TB_Report.Text))
+                        {
+                            // Создаем MessageBox с вопросом
+                            MessageBoxResult results = MessageBox.Show("Отчет пустой. Создать отчет по выбранному зданию?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                            // Обрабатываем результат
+                            switch (results)
+                            {
+                                case MessageBoxResult.Yes:
+                                    // Действия при нажатии на "Да"
+                                    createReportTB();
+                                    printCreatedReportFromTB();
+                                    //MessageBox.Show("Вы выбрали Да.");
+                                    break;
+
+                                case MessageBoxResult.No:
+                                    // Действия при нажатии на "Нет"
+                                    //MessageBox.Show("Вы выбрали Нет.");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            printCreatedReportFromTB();
+                        }
+                        break;
+                    case "Excel":
+                        SaveToExcel();
+                        break;
+                    case "Word":
+                        saveToWord();
+                        break;
+                    case "Word Таблицы":
+                        CreateWordReport_withTables();
+                        break;
+                    case "Выйти из аккаунта":
+                        MessageBox.Show("Вы успешно закончили сеанс под аккаунтом риелтора\nВы будете перенаправлены в меню авторизации");
+                        this.Hide();
+                        // Создание экземпляра класса LoginWindow 
+                        LoginWindow loginWindow = new LoginWindow();
+                        // Отображение созданного окна
+                        loginWindow.ShowDialog();
+                        this.Close();
+                        break;
+                    default:
+                        MessageBox.Show("Выбран неизвестный элемент");
+                        break;
+                }
+            }
+        }
+
+        private void createReportTB()
+        {
+            // Создаем пустую строку для отчета
+            string reportText = "";
+            // Добавляем в нее текст из каждого DataGrid
+
+            reportText += GetDataGridTextChanged(DG1);
+
+            // Создаем MessageBox с вопросом
+            MessageBoxResult result = MessageBox.Show("Добавить в отчет квартиры и комнаты?", "Вопрос", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            // Обрабатываем результат
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    // Действия при нажатии на "Да"
+                    reportText += GetDataGridTextChanged(DG2);
+                    reportText += GetDataGridTextChanged(DG3);
+                    //MessageBox.Show("Вы выбрали Да.");
+                    break;
+
+                case MessageBoxResult.No:
+                    // Действия при нажатии на "Нет"
+                    //MessageBox.Show("Вы выбрали Нет.");
+                    break;
+            }
+
+            // Отображаем отчет в TextBlock
+            TB_Report.Text = reportText;
+        }
+
+        private string GetDataGridTextChanged(DataGrid dataGrid)
+        {
+            string text = "";
+
+            switch (dataGrid.Name.ToString())
+            {
+                case "DG1":
+                    text += "Таблица со зданиями (Building)" + "\n";
+                    break;
+                case "DG2":
+                    text += "Таблица с квартирами в здании (Flat)" + "\n";
+                    break;
+                case "DG3":
+                    text += "Таблица с комнатами в квартире (Room)" + "\n";
+                    break;
+                case "DG5":
+                    text += "Таблица с местоположением здания (Building_location)" + "\n";
+                    break;
+            }
+
+            switch (dataGrid.Name.ToString())
+            {
+                case "DG1":
+                    if (dataGrid.SelectedItems.Count > 0)
+                    {
+                        DataRowView selectedRow = (DataRowView)dataGrid.SelectedItem;
+                        for (int i = 0; i < dataGrid.Columns.Count; i++)
+                        {
+                            text += dataGrid.Columns[i].Header + ": " + selectedRow.Row.ItemArray[i] + "\n";
+                        }
+                        text += "\n";
+                    }
+                    break;
+                case "DG2":
+                case "DG3":
+                case "DG5":
+                    foreach (DataRowView row in dataGrid.ItemsSource)
+                    {
+                        for (int i = 0; i < dataGrid.Columns.Count; i++)
+                        {
+                            text += dataGrid.Columns[i].Header + ": " + row.Row.ItemArray[i] + "\n";
+                        }
+                        text += "\n";
+                    }
+                    break;
+            }
+
+            return text;
+        }
+
+        private void printCreatedReportFromTB()
+        {
+            // Создаем объект PrintDialog
+            PrintDialog printDialog = new PrintDialog();
+            // Отображаем диалоговое окно печати
+            if (printDialog.ShowDialog() == true)
+            {
+                // Получаем текст из TextBox
+                string text = TB_Report.Text;
+                // Создаем объект FlowDocument для форматирования текста
+                FlowDocument document = new FlowDocument(new Paragraph(new Run(text)));
+                // Устанавливаем размер страницы и ориентацию в соответствии с параметрами печати
+                document.PageHeight = printDialog.PrintableAreaHeight;
+                document.PageWidth = printDialog.PrintableAreaWidth;
+                document.PagePadding = new Thickness(50);
+                document.ColumnGap = 0;
+                document.ColumnWidth = printDialog.PrintableAreaWidth;
+                // Печатаем документ
+                printDialog.PrintDocument(((IDocumentPaginatorSource)document).DocumentPaginator, "Printing TextBox");
+            }
+        }
+
+        private void CreateWordReport_withTables()
+        {
+            Word.Application wordApp = new Word.Application();
+            Word.Document doc = wordApp.Documents.Add();
+
+            AddHeaderUNREADABLE(doc, "Дома из таблицы Building");
+            AddDataGridContentsUNREADABLE(doc, DG1);
+
+            AddHeaderUNREADABLE(doc, "Квартиры из таблицы Flat");
+            AddDataGridContents(doc, DG2);
+
+            AddHeaderUNREADABLE(doc, "Комнаты из таблицы Room");
+            AddDataGridContentsUNREADABLE(doc, DG3);
+
+            string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Риелтор_Word_Отчет_ТАБЛИЦА.docx");
+            doc.SaveAs2(filePath);
+            doc.Close();
+            wordApp.Quit();
+
+            MessageBox.Show("Отчет сохранен в файл.");
+        }
+
+        private void ReportSelection_ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Получаем выбранный элемент ComboBox
+            ComboBoxItem selectedComboBoxItem = ReportSelection_ComboBox.SelectedItem as ComboBoxItem;
+
+            if (selectedComboBoxItem != null)
+            {
+                // Получаем текст выбранного элемента ComboBox
+                string selectedText = (selectedComboBoxItem.Content as StackPanel).Children.OfType<TextBlock>().FirstOrDefault()?.Text;
+
+                // Выводим MessageBox с текстом в зависимости от выбранного элемента ComboBox
+                switch (selectedText)
+                {
+                    case "Выйти из аккаунта":
+
+                        break;
+                }
+            }
+        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {

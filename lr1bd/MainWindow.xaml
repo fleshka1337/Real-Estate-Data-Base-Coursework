@@ -12,25 +12,7 @@
             <ColumnDefinition Width="109*"/>
             <ColumnDefinition Width="51*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="building _location" HorizontalAlignment="Left" Margin="10,256,0,0" VerticalAlignment="Top" Height="21" Width="121" Click="Button_Click"/>
         <DataGrid Name="DG1" ItemsSource="{Binding}" Margin="10,10,10,464" Grid.ColumnSpan="2"/>
-        <Button Content="building" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" Height="21" Width="121" Click="Button_Click_1"/>
-        <Button Content="Building _material" HorizontalAlignment="Left" Margin="10,308,0,0" VerticalAlignment="Top" Height="23" Width="121" Click="Button_Click_2"/>
-        <Button Content="Flat" HorizontalAlignment="Left" Margin="10,336,0,0" VerticalAlignment="Top" Height="24" Width="121" Click="Button_Click_3"/>
-        <Button Content="Flat Space" HorizontalAlignment="Left" Margin="10,365,0,0" VerticalAlignment="Top" Height="24" Width="121" Click="Button_Click_4"/>
-        <Button Content="Room" HorizontalAlignment="Left" Margin="10,394,0,0" VerticalAlignment="Top" Height="24" Width="121" Click="Button_Click_5"/>
-        <Button Name="Create_Row" Content="Добавить строку" HorizontalAlignment="Left" Margin="136,256,0,0" VerticalAlignment="Top" Height="21" Width="128" Click="Button_Click_6"/>
-        <Button Content="Добавить строку" HorizontalAlignment="Left" Margin="136,282,0,0" VerticalAlignment="Top" Height="21" Width="128" Click="Button_Click_8"/>
-        <Button Content="Добавить строку" HorizontalAlignment="Left" Margin="136,308,0,0" VerticalAlignment="Top" Height="23" Width="128" Click="Button_Click_9"/>
-        <Button Content="Добавить строку" HorizontalAlignment="Left" Margin="136,336,0,0" VerticalAlignment="Top" Height="24" Width="128" Click="Button_Click_10"/>
-        <Button Content="Добавить строку" HorizontalAlignment="Left" Margin="136,365,0,0" VerticalAlignment="Top" Height="24" Width="128" Click="Button_Click_11"/>
-        <Button Content="Добавить строку" HorizontalAlignment="Left" Margin="136,394,0,0" VerticalAlignment="Top" Height="24" Width="128" Click="Button_Click_7"/>
-        <Button Name="Delete_Row1" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,256,0,0" VerticalAlignment="Top" Height="21" Width="119" Click="Delete_Row1_Click"/>
-        <Button Name="Delete_Row2" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,282,0,0" VerticalAlignment="Top" Width="119" Click="Delete_Row2_Click"/>
-        <Button Name="Delete_Row3" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,310,0,0" VerticalAlignment="Top" Width="119" Click="Delete_Row3_Click"/>
-        <Button Name="Delete_Row4" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,338,0,0" VerticalAlignment="Top" Width="119" Click="Delete_Row4_Click"/>
-        <Button Name="Delete_Row5" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,369,0,0" VerticalAlignment="Top" Width="119" Click="Delete_Row5_Click"/>
-        <Button Name="Delete_Row6" Content="Удалить строку" HorizontalAlignment="Left" Margin="269,394,0,0" VerticalAlignment="Top" Width="119" Click="Delete_Row6_Click"/>
         <TextBox x:Name="SearchCondition" HorizontalAlignment="Left" Margin="222,237,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Grid.Column="1"/>
         <ListBox x:Name="TableList" Grid.Column="1" Margin="222,266,10,180" Width="NaN" Height="NaN"/>
         <Button x:Name="SearchInDB" Grid.Column="1" Content="Найти" HorizontalAlignment="Left" Margin="222,514,0,0" VerticalAlignment="Top" Width="150" Click="Search_Click"/>
@@ -44,16 +26,79 @@
             <RadioButton Name="rbLess" Content="Меньше" Height="20" Checked="WhatsRB_Checked"/>
             <RadioButton Name="rbLessEqual" Content="Меньше равно" Height="20" Checked="WhatsRB_Checked"/>
         </StackPanel>
-        <Button Name="update_Button5" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,369,0,0" VerticalAlignment="Top" Width="138" Click="update_Button5_Click"/>
-        <Button Name="update_Button1" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,257,0,0" VerticalAlignment="Top" Width="138" Height="21" Click="update_Button1_Click"/>
-        <Button Name="update_Button2" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,283,0,0" VerticalAlignment="Top" Width="138" Height="21" Click="update_Button2_Click"/>
-        <Button Name="update_Button3" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,310,0,0" VerticalAlignment="Top" Width="138" Height="21" Click="update_Button3_Click"/>
-        <Button Name="update_Button4" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,338,0,0" VerticalAlignment="Top" Width="138" Height="21" Click="update_Button4_Click"/>
-        <Button Name="update_Button6" Content="Обновить строку" HorizontalAlignment="Left" Margin="393,396,0,0" VerticalAlignment="Top" Width="138" Height="20" Click="update_Button6_Click"/>
-        <Button x:Name="BtnLogout" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="10,476,0,0" VerticalAlignment="Top" Height="28" Width="158" Background="#FFFF7878" Click="BtnLogout_Click"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,455,0,0" TextWrapping="Wrap" Text="Аккаунт администратора" VerticalAlignment="Top" Width="158" FontStyle="Italic"/>
-        <Button Content="Составить отчет &#xD;&#xA;по открытой таблице (в PDF)" HorizontalAlignment="Left" Margin="187,463,0,0" VerticalAlignment="Top" Width="201" Click="Button_Click_12" Height="41"/>
-        <Button Content="Сохранить отчет&#xD;&#xA;по выбранным строчкам (в PDF)" HorizontalAlignment="Left" Margin="187,514,0,0" VerticalAlignment="Top" Height="40" Width="201" Click="Button_Click_13"/>
-        <Button Content="Print" HorizontalAlignment="Left" Margin="409,464,0,0" VerticalAlignment="Top" Height="40" Width="204" Click="Button_Click_14"/>
+        <Button x:Name="BtnLogout" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="19,617,0,0" VerticalAlignment="Top" Height="28" Width="158" Background="#FFFF7878" Click="BtnLogout_Click"/>
+        <TextBlock HorizontalAlignment="Left" Margin="19,596,0,0" TextWrapping="Wrap" Text="Аккаунт администратора" VerticalAlignment="Top" Width="158" FontStyle="Italic"/>
+        <Button Content="Составить отчет &#xD;&#xA;по открытой таблице (в PDF)" HorizontalAlignment="Left" Margin="19,413,0,0" VerticalAlignment="Top" Width="201" Click="Button_Click_12" Height="41"/>
+        <Button Content="Сохранить отчет&#xD;&#xA;по выбранным строчкам (в PDF)" HorizontalAlignment="Left" Margin="19,464,0,0" VerticalAlignment="Top" Height="40" Width="201" Click="Button_Click_13"/>
+
+        <ComboBox Name="TableSelection_ComboBox" SelectionChanged="ReportSelection_ComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="20,283,0,0" VerticalAlignment="Top" Width="180" Height="50">
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Building</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Building Location</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Building Material</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Flat</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Flat Space</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Room</TextBlock>
+                    <TextBlock>Таблица</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+        <Button Name="SelectTable_BTN" Content="Выполнить" HorizontalAlignment="Left" Margin="420,284,0,0" VerticalAlignment="Top" Height="49" Width="136" Click="CreateReport_BTN_Click"/>
+
+        <ComboBox Name="FunctionSelection_ComboBox" SelectionChanged="FunctionSelection_ComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="229,283,0,0" VerticalAlignment="Top" Width="159" Height="50">
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Выбрать</TextBlock>
+                    <TextBlock>Действия со строками</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Добавить</TextBlock>
+                    <TextBlock>Строку</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Удалить</TextBlock>
+                    <TextBlock>Строку</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <StackPanel>
+                    <TextBlock FontSize="16">Обновить</TextBlock>
+                    <TextBlock>Строку</TextBlock>
+                </StackPanel>
+            </ComboBoxItem>
+        </ComboBox>
+
+
+
     </Grid>
 </Window>
